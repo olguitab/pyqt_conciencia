@@ -259,14 +259,11 @@ class Ventana_Juego(QMainWindow):
         self.tiempo.setValue(valor)
     
     def disparo(self):
-        print(
-            self.mira_clase.izq_der, 
-            self.mira_clase.subir_bajar,
-            "\n",
-            self.mira_izq_clase.izq_der, 
-            self.mira_izq_clase.subir_bajar
-            )
-
+        self.mira_clase.izq_der = max([0,self.mira_clase.izq_der])
+        self.mira_clase.izq_der = max([0,self.mira_clase.subir_bajar])
+        self.mira_izq_clase.izq_der = max([0,self.mira_izq_clase.izq_der])
+        self.mira_izq_clase.izq_der = max([0,self.mira_izq_clase.subir_bajar])
+        
         self.recta = QtCore.QRect(
             self.mira_clase.izq_der + 40, 
             self.mira_clase.subir_bajar + 25, 
