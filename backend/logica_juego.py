@@ -43,10 +43,8 @@ class Juego (QObject):
     senal_mover_prop = pyqtSignal(int, int, int)
     senal_boom = pyqtSignal(int, int, int)
     senal_actualizar = pyqtSignal()
-    senal_mover_mira = pyqtSignal(int, int)
-    senal_mover_mira_izq = pyqtSignal(int, int)
+    senal_mover_mira = pyqtSignal(int, int, int, int)
     senal_disparo = pyqtSignal()
-    senal_disparo_izq = pyqtSignal()
 
     def __init__(self):
 
@@ -150,7 +148,7 @@ class Juego (QObject):
         self.tiempo_res -= 1
         self.senal_actualizar.emit()
 
-    def mover_mira(self, mira):
+    def mover_mira(self, mira, mira_izq):
         archivo = open("actualiza.txt","r") 
         c = 1
         for i in archivo:
@@ -158,6 +156,10 @@ class Juego (QObject):
                 mira.izq_der = float(i)
             elif c == 2:
                 mira.subir_bajar = float(i)
+            elif c == 3:
+                mira_izq.izq_der = float(i)
+            elif c == 4:
+                mira_izq.subir_bajar = float(i)
             c+= 1
 
         if self.pausa:
@@ -168,32 +170,16 @@ class Juego (QObject):
                     mira.izq_der = float(i)
                 elif c== 2:
                     mira.subir_bajar = float(i)
-                c+= 1
-        archivo.close()
-        self.senal_mover_mira.emit(mira.izq_der, mira.subir_bajar)
-
-    def mover_mira_izq(self, mira_izq):
-        archivo = open("actualiza.txt","r") 
-        c = 1
-        for i in archivo:
-            if c == 3:
-                mira_izq.izq_der = float(i)
-            elif c == 4:
-                mira_izq.subir_bajar = float(i)
-            c+= 1
-
-        if self.pausa:
-            archivo = open("actualiza.txt","r") 
-            c = 1
-            for i in archivo:
-                if c == 3:
+                elif c == 3:
                     mira_izq.izq_der = float(i)
-                elif c== 4:
+                elif c == 4:
                     mira_izq.subir_bajar = float(i)
                 c+= 1
         archivo.close()
-        self.senal_mover_mira_izq.emit(mira_izq.izq_der, mira_izq.subir_bajar)
-    
+        self.senal_mover_mira.emit(
+            mira.izq_der, mira.subir_bajar,
+            mira_izq.izq_der, mira_izq.subir_bajar)
+
     def iniciar_pausa(self):
 
         if self.pausa:

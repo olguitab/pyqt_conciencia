@@ -23,8 +23,7 @@ from backend.logica_juego import Juego
 
 class Ventana_Juego(QMainWindow):
 
-    senal_tecla = pyqtSignal(object)
-    senal_tecla_izq = pyqtSignal(object)
+    senal_tecla = pyqtSignal(object, object)
     senal_alien = pyqtSignal()
     senal_tiempo = pyqtSignal()
     senal_postjuego = pyqtSignal(bool, object, int)
@@ -216,20 +215,18 @@ class Ventana_Juego(QMainWindow):
         self.parapente4_cls.x = 1
         self.parapente4.setVisible(True)
     
-    def actualizar_movimiento(self, x , y):
+    def actualizar_movimiento(self, x , y, x2, y2):
         if self.juego.pausa:
             self.disparo()
+
             self.mira.move(x, y)
             self.mira_clase.izq_der = x
             self.mira_clase.subir_bajar = y
 
-    def actualizar_movimiento_izq(self, x , y):
-        if self.juego.pausa:
-            self.disparo_izq()
-            self.mira_izq.move(x, y)
-            self.mira_izq_clase.izq_der = x
-            self.mira_izq_clase.subir_bajar = y
- 
+            self.mira_izq.move(x2, y2)
+            self.mira_izq_clase.izq_der = x2
+            self.mira_izq_clase.subir_bajar = y2
+
     def actualizar_alien(self, x, y, numero):
         if self.juego.pausa:
             if numero == 1:
@@ -253,9 +250,8 @@ class Ventana_Juego(QMainWindow):
             self.juego.mover(self.alien5_clase)
             self.juego.mover(self.alien6_clase)
             self.juego.mover(self.alien7_clase)
-            self.senal_tecla.emit(self.mira_clase)
-            self.senal_tecla_izq.emit(self.mira_izq_clase)
-
+            self.senal_tecla.emit(self.mira_clase, self.mira_izq_clase)
+            
     def tiempo_avanzar(self):
         self.senal_tiempo.emit()
     
@@ -263,19 +259,33 @@ class Ventana_Juego(QMainWindow):
         self.tiempo.setValue(valor)
     
     def disparo(self):
+        print(
+            self.mira_clase.izq_der, 
+            self.mira_clase.subir_bajar,
+            "\n",
+            self.mira_izq_clase.izq_der, 
+            self.mira_izq_clase.subir_bajar
+            )
+
         self.recta = QtCore.QRect(
             self.mira_clase.izq_der + 40, 
             self.mira_clase.subir_bajar + 25, 
             130, 
             90)
 
-        self.parapente1_comparar =QtCore.QRect( 
+        self.recta_izq = QtCore.QRect(
+            self.mira_izq_clase.izq_der + 40, 
+            self.mira_izq_clase.subir_bajar + 25, 
+            130, 
+            90)
+
+        self.parapente1_comparar = QtCore.QRect( 
             self.parapente1_cls.x, self.parapente1_cls.y, 300, 230)
-        self.parapente2_comparar =QtCore.QRect(
+        self.parapente2_comparar = QtCore.QRect(
             self.parapente2_cls.x, self.parapente2_cls.y, 300, 230)
-        self.parapente3_comparar =QtCore.QRect(
+        self.parapente3_comparar = QtCore.QRect(
             self.parapente3_cls.x, self.parapente3_cls.y, 300, 230)
-        self.parapente4_comparar =QtCore.QRect(
+        self.parapente4_comparar = QtCore.QRect(
             self.parapente4_cls.x, self.parapente4_cls.y, 300, 230)
 
         if self.recta.intersected(self.parapente1_comparar):
@@ -303,39 +313,6 @@ class Ventana_Juego(QMainWindow):
             self.parapente4.destroy()
         self.evaluar()
 
-    def disparo_izq(self):
-        self.recta = QtCore.QRect(
-            self.mira_izq_clase.izq_der + 40, self.mira_izq_clase.subir_bajar + 25, 130, 90)
-        self.parapente1_comparar =QtCore.QRect( 
-            self.parapente1_cls.x, self.parapente1_cls.y, 300, 230)
-        self.parapente2_comparar =QtCore.QRect(
-            self.parapente2_cls.x, self.parapente2_cls.y, 300, 230)
-        self.parapente3_comparar =QtCore.QRect(
-            self.parapente3_cls.x, self.parapente3_cls.y, 300, 230)
-        self.parapente4_comparar =QtCore.QRect(
-            self.parapente4_cls.x, self.parapente4_cls.y, 300, 230)
-
-        if self.recta.intersected(self.parapente1_comparar):
-            self.senal_explosion.emit(self.parapente1_cls)
-            self.parapente1.setVisible(False)
-            self.a1 = False
-
-        if self.recta.intersected(self.parapente2_comparar):
-            self.senal_explosion.emit(self.parapente2_cls)
-            self.parapente2.setVisible(False)
-            self.a2 = False
-
-        if self.recta.intersected(self.parapente3_comparar):
-            self.senal_explosion.emit(self.parapente3_cls)
-            self.parapente3.setVisible(False)
-            self.a3 = False
-        
-        if self.recta.intersected(self.parapente4_comparar):
-            self.senal_explosion.emit(self.parapente4_cls)
-            self.parapente4.setVisible(False)
-            self.a4 = False
-        self.evaluar()
-        
     def evaluar(self):
         if not self.a1 and not self.a2 and not self.a3 and not self.a4: 
             self.juego.puntaje_o = 4 # TODO: Guardar puntaje adecuado

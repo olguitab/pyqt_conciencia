@@ -28,13 +28,10 @@ if __name__ == '__main__':
     ventana_inicio.senal_enviar_jugar.connect(ventana_juego.mostrar)    
 
     ventana_juego.senal_tecla.connect(logica_juego.mover_mira)
-    ventana_juego.senal_tecla_izq.connect(logica_juego.mover_mira_izq)
     logica_juego.senal_mover_mira.connect(ventana_juego.actualizar_movimiento)
-    logica_juego.senal_mover_mira_izq.connect(ventana_juego.actualizar_movimiento_izq)
     ventana_juego.senal_alien.connect(logica_juego.mover)
 
     logica_juego.senal_disparo.connect(ventana_juego.disparo)
-    logica_juego.senal_disparo_izq.connect(ventana_juego.disparo_izq)
 
     ventana_juego.senal_postjuego.connect(ventana_postjuego.mostrar)
     ventana_postjuego.senal_salir.connect(ventana_inicio.show)
