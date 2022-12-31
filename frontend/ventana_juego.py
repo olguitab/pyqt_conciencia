@@ -41,7 +41,6 @@ class Ventana_Juego(QMainWindow):
         self.a4 = True
         self.contador = 0
 
-
     def mostrar(self,espacio,juego):
         self.video_widget = QVideoWidget(self)
         self.player = QMediaPlayer(self)
@@ -378,7 +377,7 @@ class Ventana_Juego(QMainWindow):
         self.mira.destroy()
         self.mira_izq.destroy()
         self.senal_postjuego.emit(True, self.juego, 1)
-        self.close()
+        #self.close()
         
     def explosion(self, x, y, contador):
         if contador == 1:
