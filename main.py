@@ -29,7 +29,6 @@ if __name__ == '__main__':
 
     ventana_juego.senal_tecla.connect(logica_juego.mover_mira)
     logica_juego.senal_mover_mira.connect(ventana_juego.actualizar_movimiento)
-    ventana_juego.senal_alien.connect(logica_juego.mover)
 
     logica_juego.senal_disparo.connect(ventana_juego.disparo)
 

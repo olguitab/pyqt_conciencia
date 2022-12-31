@@ -30,6 +30,7 @@ class Alien(QObject):
         self.velocidad = [VELOCIDAD_ALIEN[0],VELOCIDAD_ALIEN[1]]
         self.numero = 0
         self.espacio = [self.x, self.y , 60, 50]
+        self.alive = True
 
 class Jugador(QObject):
 
@@ -66,47 +67,35 @@ class Juego (QObject):
         self.pausa = True
         self.palabra = ""
 
-
+    def crear_parapentes(self):
+        lista_props = []
+        for i in range(4): # Crear 4 parapentes iguales
+            parapente = Alien()
+            parapente.numero = i + 1 # Empezar a contar desde 1
+            lista_props.append(parapente)
+        return lista_props
     
-    def crear_aliens(self):
+    def crear_props(self):
 
-        lista_aliens = []
-        for niveles in range(0,self.nivel_actual):
-            alien1 = Alien()
-            alien1.numero = 1
-            lista_aliens.append(alien1)
+        lista_props = []
 
-            alien2 = Alien()
-            alien2.numero = 2
-            lista_aliens.append(alien2)
+        alien5 = Alien()
+        alien5.numero = 5
+        lista_props.append(alien5)
 
-            alien3 = Alien()
-            alien3.numero = 3
-            lista_aliens.append(alien3)
+        alien6 = Alien()
+        alien6.numero = 6
+        lista_props.append(alien6)
 
-            alien4 = Alien()
-            alien4.numero = 4
-            lista_aliens.append(alien4)
+        alien7 = Alien()
+        alien7.numero = 7
+        lista_props.append(alien7)
 
-            alien5 = Alien()
-            alien5.numero = 5
-            lista_aliens.append(alien5)
-
-            alien6 = Alien()
-            alien6.numero = 6
-            lista_aliens.append(alien6)
-
-            alien7 = Alien()
-            alien7.numero = 7
-            lista_aliens.append(alien7)
-
-        return lista_aliens
+        return lista_props
 
     def mover(self, prop):
-        
         if self.pausa:
             prop.x += prop.velocidad[0]
-
             self.senal_mover_prop.emit(prop.x, prop.y, prop.numero)
 
     def explosiones(self, prop):
@@ -181,12 +170,7 @@ class Juego (QObject):
             mira_izq.izq_der, mira_izq.subir_bajar)
 
     def iniciar_pausa(self):
-
-        if self.pausa:
-            self.pausa = False
-
-        elif not self.pausa:
-            self.pausa = True
+        self.pausa = not self.pausa
     
 
 
