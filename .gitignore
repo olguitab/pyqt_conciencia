@@ -1,0 +1,8 @@
+data
+__pycache__
+frontend/__pycache__
+backend/__pycache__
+
+
+actualiza.txt
+*.mp4
