@@ -1,7 +1,7 @@
 from random import random, randint
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtCore import QObject,  QTimer
-from parametros import VELOCIDAD_ALIEN, DURACION_NIVEL_INICIAL
+from parametros import VELOCIDAD_PROPS, DURACION_NIVEL_INICIAL
 from os import path
 from random import randint
 from PyQt5.QtMultimedia import QMediaPlayer, QSound
@@ -19,7 +19,7 @@ class Mira(QObject):
         self.palabra = ""
 
         
-class Alien(QObject):
+class Prop(QObject):
     #60,50
     #640,380
 
@@ -27,10 +27,11 @@ class Alien(QObject):
         super().__init__()
         self.x = 1
         self.y = randint(0,330)
-        self.velocidad = [VELOCIDAD_ALIEN[0],VELOCIDAD_ALIEN[1]]
+        self.velocidad = [VELOCIDAD_PROPS[0],VELOCIDAD_PROPS[1]]
         self.numero = 0
         self.espacio = [self.x, self.y , 60, 50]
         self.alive = True
+        self.imageUrl = ""
 
 class Jugador(QObject):
 
@@ -63,14 +64,14 @@ class Juego (QObject):
         self.puntaje_t = 0
         self.puntaje_o = 0
         self.ponderador = 0
-        self.velocidad = [VELOCIDAD_ALIEN[0], VELOCIDAD_ALIEN[1]]
+        self.velocidad = [VELOCIDAD_PROPS[0], VELOCIDAD_PROPS[1]]
         self.pausa = True
         self.palabra = ""
 
     def crear_parapentes(self):
         lista_props = []
         for i in range(4): # Crear 4 parapentes iguales
-            parapente = Alien()
+            parapente = Prop()
             parapente.numero = i + 1 # Empezar a contar desde 1
             lista_props.append(parapente)
         return lista_props
@@ -79,15 +80,15 @@ class Juego (QObject):
 
         lista_props = []
 
-        alien5 = Alien()
+        alien5 = Prop()
         alien5.numero = 5
         lista_props.append(alien5)
 
-        alien6 = Alien()
+        alien6 = Prop()
         alien6.numero = 6
         lista_props.append(alien6)
 
-        alien7 = Alien()
+        alien7 = Prop()
         alien7.numero = 7
         lista_props.append(alien7)
 

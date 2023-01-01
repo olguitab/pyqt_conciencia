@@ -17,6 +17,7 @@ class Ventana_Inicio(QMainWindow):
 
     def __init__(self):
         super().__init__()
+        self.setStyleSheet("background-color:rgba(0,255,0,0%);")
         self.initUI()
 
     def initUI(self):
@@ -26,7 +27,7 @@ class Ventana_Inicio(QMainWindow):
         self.player.setVideoOutput(self.video_widget)
         self.player.setMedia(QMediaContent(QUrl.fromLocalFile("BASEJUEGO.mp4")))
         self.player.play()
-
+        
         self.boton_jugar = QPushButton("",self)
         self.boton_jugar.setGeometry(700, 450, 500,200 )
         self.boton_jugar.setIcon(QIcon("../programa/data/boton_jugar.png"))
