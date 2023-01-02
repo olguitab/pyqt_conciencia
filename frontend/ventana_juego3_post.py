@@ -11,9 +11,9 @@ from PyQt5.QtMultimediaWidgets import *
 from PyQt5.QtWidgets import*
 from backend.logica_juego import Juego
 
-class Ventana_Juego_Post(QMainWindow):
+class Ventana_Juego3_Post(QMainWindow):
 
-    senal_nivel2 = pyqtSignal(int, object)
+    senal_nivel4 = pyqtSignal(int, object)
 
     def __init__(self):
         super().__init__()
@@ -21,17 +21,17 @@ class Ventana_Juego_Post(QMainWindow):
 
 
     def mostrar(self, espacio, juego):
-        print("[ventana_juego_post] Abriendo post juego 1")
         self.juego = juego
         # Crear el widget QVideoWidget y establecerlo como el visor de video del reproductor
         self.video_widget = QVideoWidget(self)
         self.player = QMediaPlayer(self)
         self.player.setVideoOutput(self.video_widget)
         self.player.setMedia(QMediaContent(QUrl.fromLocalFile("BASEJUEGO.mp4")))
-        self.player.setPosition(107000)
+        self.player.setPosition(172000)
         self.player.play()
         
         self.timer = QTimer()
+        self.timer.timeout.connect(self.nivel4)
 
         QMediaPlayer.state(self.player)
 
@@ -39,15 +39,17 @@ class Ventana_Juego_Post(QMainWindow):
         self.showFullScreen()
 
         # iniciar nivel 2 luego de explicacion
-        #self.timer.singleShot(25000, self.nivel2)
+        self.timer.singleShot(13000, self.nivel4)
         
 
-    def nivel2(self):
-        print("[ventana_juego_post] Abriendo nivel 2")
-        self.senal_nivel2.emit(1, self.juego)
+    def cerrar_juego(self):
         self.video_widget.destroy()
         self.player.stop()
         self.close()
+    
+    def nivel4(self):
+        self.senal_nivel4.emit(1, self.juego)
+        self.cerrar_juego()
 
     
 

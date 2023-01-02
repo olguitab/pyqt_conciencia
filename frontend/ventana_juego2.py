@@ -35,12 +35,12 @@ class Ventana_Juego2(QMainWindow):
         self.contador = 0
 
     def mostrar(self,espacio,juego):
+        print("[ventana_juego2] Abriendo nivel 2")
         self.video_widget = QVideoWidget(self)
         self.player = QMediaPlayer(self)
         self.player.setVideoOutput(self.video_widget)
         self.player.setMedia(QMediaContent(QUrl.fromLocalFile("BASEJUEGO.mp4")))
-        self.player.setPosition(89000)
-        self.player.setVolume(0)
+        self.player.setPosition(122000)
         self.player.play()
 
         self.setCentralWidget(self.video_widget)
@@ -246,6 +246,7 @@ class Ventana_Juego2(QMainWindow):
             self.cerrar()
         
     def cerrar(self):
+        print("[ventana_juego2] Cerrando nivel 2")
         self.puntaje_obtenido = 0
         self.tiempo_res = 0
         self.juego = Juego()

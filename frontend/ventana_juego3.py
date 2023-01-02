@@ -35,12 +35,12 @@ class Ventana_Juego3(QMainWindow):
         self.contador = 0
 
     def mostrar(self,espacio,juego):
+        print("Abriendo nivel 3")
         self.video_widget = QVideoWidget(self)
         self.player = QMediaPlayer(self)
         self.player.setVideoOutput(self.video_widget)
         self.player.setMedia(QMediaContent(QUrl.fromLocalFile("BASEJUEGO.mp4")))
-        self.player.setPosition(137000)
-        self.player.setVolume(0)
+        self.player.setPosition(157000)
         self.player.play()
 
         self.setCentralWidget(self.video_widget)

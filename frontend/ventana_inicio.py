@@ -49,10 +49,11 @@ class Ventana_Inicio(QMainWindow):
 
     def boton_click(self):
         self.timer_explicacion = QTimer()
-        self.timer_explicacion.timeout.connect(self.abrir_juego)
-        self.timer_explicacion.start(7000)
+        self.timer_explicacion.singleShot(7000, self.abrir_juego)
+        self.boton_jugar.hide()
 
     def abrir_juego(self):
+        print("[ventana_inicio] Abriendo nivel 1")
         self.juego = Juego()
         self.senal_enviar_jugar.emit(1,self.juego)
         self.video_widget.destroy()

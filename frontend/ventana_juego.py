@@ -35,6 +35,7 @@ class Ventana_Juego(QMainWindow):
         self.contador = 0
 
     def mostrar(self,espacio,juego):
+        print("[ventana_juego] Abriendo nivel 1")
         self.video_widget = QVideoWidget(self)
         self.player = QMediaPlayer(self)
         self.player.setVideoOutput(self.video_widget)
@@ -245,9 +246,10 @@ class Ventana_Juego(QMainWindow):
             self.cerrar()
         
     def cerrar(self):
+        print("[ventana_juego] Cerrando nivel 1")
+        self.senal_nivel2.emit(1, self.juego)
         self.puntaje_obtenido = 0
         self.tiempo_res = 0
-        self.juego = Juego()
         self.video_widget.destroy()
         self.player.stop()
         for p in self.parapentes:
@@ -257,7 +259,6 @@ class Ventana_Juego(QMainWindow):
         self.alien7.destroy()
         self.mira.destroy()
         self.mira_izq.destroy()
-        self.senal_nivel2.emit(1, self.juego)
         self.close()
         
     def explosion(self, x, y, contador):
