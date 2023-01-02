@@ -40,7 +40,6 @@ class Ventana_Juego(QMainWindow):
         self.player.setVideoOutput(self.video_widget)
         self.player.setMedia(QMediaContent(QUrl.fromLocalFile("BASEJUEGO.mp4")))
         self.player.setPosition(75000)
-        self.player.setVolume(0)
         self.player.play()
 
         self.setCentralWidget(self.video_widget)
