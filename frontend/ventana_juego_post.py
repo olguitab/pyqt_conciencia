@@ -27,7 +27,7 @@ class Ventana_Juego_Post(QMainWindow):
         self.player = QMediaPlayer(self)
         self.player.setVideoOutput(self.video_widget)
         self.player.setMedia(QMediaContent(QUrl.fromLocalFile("BASEJUEGO.mp4")))
-        self.player.setPosition(107000)
+        #self.player.setPosition(107000)
         self.player.play()
         
         self.timer = QTimer()
@@ -48,8 +48,8 @@ class Ventana_Juego_Post(QMainWindow):
         self.close()
     
     def nivel2(self):
-        self.cerrar_juego()
         self.senal_nivel2.emit(1, self.juego)
+        self.cerrar_juego()
 
     
 

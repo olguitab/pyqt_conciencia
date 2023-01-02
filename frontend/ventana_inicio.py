@@ -31,7 +31,7 @@ class Ventana_Inicio(QMainWindow):
         self.boton_jugar.setGeometry(700, 450, 500,200 )
         self.boton_jugar.setIcon(QIcon("../programa/data/boton_jugar.png"))
         self.boton_jugar.setIconSize(1 * QSize(self.boton_jugar.width(), self.boton_jugar.height()))
-        self.boton_jugar.clicked.connect(self.abrir_juego)
+        self.boton_jugar.clicked.connect(self.boton_click)
         #self.boton_jugar.setFixedSize(136, 64)
 
         self.timer = QTimer()
@@ -44,8 +44,13 @@ class Ventana_Inicio(QMainWindow):
         self.setCentralWidget(self.video_widget)
         self.showFullScreen()
 
-        self.timer.start(55000)
+        self.timer.start(53000)
         # Abre el video
+
+    def boton_click(self):
+        self.timer_explicacion = QTimer()
+        self.timer_explicacion.timeout.connect(self.abrir_juego)
+        self.timer_explicacion.start(7000)
 
     def abrir_juego(self):
         self.juego = Juego()
