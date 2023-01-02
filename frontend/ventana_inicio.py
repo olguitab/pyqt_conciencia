@@ -9,11 +9,12 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtMultimedia import *
 from PyQt5.QtMultimediaWidgets import *
 from PyQt5.QtWidgets import*
+from backend.niveles import Nivel1
 from backend.logica_juego import Juego
 
 class Ventana_Inicio(QMainWindow):
 
-    senal_enviar_jugar = pyqtSignal(int, object)
+    senal_enviar_jugar = pyqtSignal(object, object)
 
     def __init__(self):
         super().__init__()
@@ -49,8 +50,9 @@ class Ventana_Inicio(QMainWindow):
         # Abre el video
 
     def abrir_juego(self):
-        self.juego = Juego()
-        self.senal_enviar_jugar.emit(1,self.juego)
+        juego = Juego()
+        nivel = Nivel1()
+        self.senal_enviar_jugar.emit(nivel,juego)
         self.video_widget.destroy()
         self.player.stop()
         self.close()

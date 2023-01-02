@@ -1,6 +1,7 @@
 from random import random, randint
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtCore import QObject,  QTimer
+from PyQt5 import QtCore, QtGui
 from parametros import VELOCIDAD_PROPS, DURACION_NIVEL_INICIAL
 from os import path
 from random import randint
@@ -8,9 +9,15 @@ from PyQt5.QtMultimedia import QMediaPlayer, QSound
 from PyQt5.QtCore import QThread, QTimer
 from PyQt5.QtWidgets import QLabel, QMainWindow, QApplication
 
+class xy_pos():
+    x = 0
+    y = 0
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
 
 class Mira(QObject):
-
     def __init__(self):
         super().__init__()
         self.subir_bajar = 150
@@ -18,7 +25,47 @@ class Mira(QObject):
         self.jugador = QMediaPlayer
         self.palabra = ""
 
-        
+class Mano(QLabel):
+    def __init__(self, imageUrl):
+        super().__init__()
+        self.setGeometry(QtCore.QRect(220, 150 , 130, 90 ))
+        self.setPixmap(QtGui.QPixmap(imageUrl))
+        self.setScaledContents(True)
+        self.setStyleSheet("background-color: rgba(0,0,0,0%);")
+        self.subir_bajar = 150
+        self.izq_der = 300
+
+class Corazon(QLabel):
+    def __init__(self, xy_pos):
+        super().__init__()
+        self.setGeometry(QtCore.QRect(xy_pos.x, xy_pos.y, 80, 60 ))
+        self.setScaledContents(True)
+        self.setPixmap(QtGui.QPixmap("../programa/data/vida.png"))
+        self.setStyleSheet("background-color:  rgba(0,0,0,0%);")
+
+class Parapente(QLabel):
+    id = 1
+    def __init__(self, xy_pos, id):
+        super().__init__()
+        self.id = id+1
+        self.setGeometry(QtCore.QRect(xy_pos.x, xy_pos.y, 300, 230 ))
+        self.setText("")
+        self.setScaledContents(True)
+        self.setObjectName("parapente{}".format(id))
+
+class Planta(QLabel):
+    # TODO: Completar clase planta
+    id = 1
+    def __init__(self, xy_pos, id):
+        super().__init__()
+        self.id = id+1
+        self.setGeometry(QtCore.QRect(xy_pos.x, xy_pos.y, 300, 230 ))
+        self.setText("")
+        self.setScaledContents(True)
+        self.setObjectName("planta1_{}".format(id))
+
+
+
 class Prop(QObject):
     #60,50
     #640,380

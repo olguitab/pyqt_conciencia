@@ -4,7 +4,8 @@ from PyQt5.QtWidgets import (QMainWindow)
 from PyQt5.QtWidgets import QApplication
 import sys
 from PyQt5.QtCore import pyqtSignal, QTimer
-from backend.logica_juego import Mira
+from backend.logica_juego import xy_pos
+from backend.logica_juego import Mira, Mano, Corazon
 from parametros import PONDERADOR_ENTRENAMIENTO, PONDERADOR_INVASION, PONDERADOR_TUTORIAL
 from parametros import  TIEMPO_TERMINATOR_DOG, DURACION_NIVEL_INICIAL
 from PyQt5.QtMultimedia import  QSound
@@ -20,6 +21,7 @@ from PyQt5.QtMultimedia import *
 from PyQt5.QtMultimediaWidgets import *
 from PyQt5.QtWidgets import*
 from backend.logica_juego import Juego
+from backend.niveles import Nivel1, Nivel2
 
 class Ventana_Juego(QMainWindow):
 
@@ -32,6 +34,41 @@ class Ventana_Juego(QMainWindow):
     def __init__(self):
         super().__init__()
         self.contador = 0
+
+    def cargarNivel(self, nivel, juego):
+        self.video_widget = QVideoWidget(self)
+        self.player = QMediaPlayer(self)
+        self.player.setVideoOutput(self.video_widget)
+        self.player.setMedia(QMediaContent(QUrl.fromLocalFile("BASEJUEGO.mp4")))
+        self.player.setPosition(75000)
+        #self.player.setVolume(0)
+        self.player.play() 
+        self.setCentralWidget(self.video_widget)
+
+        self.juego = juego
+
+        pos_c1 = xy_pos(30,40)
+        pos_c2 = xy_pos(140,40)
+        pos_c3 = xy_pos(250,40)
+        posiciones_vidas = [pos_c1, pos_c2, pos_c3]
+        vidas = []
+        for p in posiciones_vidas:
+            vidas.append(Corazon(p))
+
+        self.aliados = nivel.aliados
+        self.enemigos = nivel.enemigos
+
+        for parapente in self.enemigos:
+            parapente.show() #TODO: Completar creacion de parapentes
+        
+        #TODO: Crear plantas y aves
+
+        self.mano_izq = Mano("../programa/data/mano_izquierda.png")
+        self.mano_der = Mano("../programa/data/mano_derecha.png")
+        self.mano_izq.show()
+        self.mano_der.show()
+
+
 
     def mostrar(self,espacio,juego):
         self.video_widget = QVideoWidget(self)

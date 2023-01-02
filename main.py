@@ -3,7 +3,6 @@ from PyQt5.QtWidgets import QApplication
 import sys
 from frontend.ventana_inicio import Ventana_Inicio
 from frontend.ventana_juego import Ventana_Juego
-from frontend.Nivel2 import Nivel2
 from backend.logica_juego import Juego, Mira
 from PyQt5 import  QtWidgets
 from frontend.ventana_postjuego import Ventana_Postjuego
@@ -16,7 +15,6 @@ if __name__ == '__main__':
     # Instanciación de ventanas
     ventana_inicio = Ventana_Inicio()
     ventana_juego = Ventana_Juego()
-    ventana_juego2 = Nivel2()
     ventana_postjuego = Ventana_Postjuego()
 
 
@@ -25,7 +23,8 @@ if __name__ == '__main__':
     logica_juego = Juego()
 
     # Conexiones de señales
-    ventana_inicio.senal_enviar_jugar.connect(ventana_juego.mostrar)    
+    #ventana_inicio.senal_enviar_jugar.connect(ventana_juego.mostrar)    
+    ventana_inicio.senal_enviar_jugar.connect(ventana_juego.cargarNivel)    
 
     ventana_juego.senal_tecla.connect(logica_juego.mover_mira)
     logica_juego.senal_mover_mira.connect(ventana_juego.actualizar_movimiento)
