@@ -14,7 +14,7 @@ from backend.logica_juego import Juego
 
 class Ventana_Inicio(QMainWindow):
 
-    senal_enviar_jugar = pyqtSignal(object, object)
+    senal_enviar_jugar = pyqtSignal(object)
 
     def __init__(self):
         super().__init__()
@@ -51,8 +51,7 @@ class Ventana_Inicio(QMainWindow):
 
     def abrir_juego(self):
         juego = Juego()
-        nivel = Nivel1()
-        self.senal_enviar_jugar.emit(nivel,juego)
+        self.senal_enviar_jugar.emit(juego)
         self.video_widget.destroy()
         self.player.stop()
         self.close()

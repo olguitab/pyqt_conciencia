@@ -30,12 +30,13 @@ class Ventana_Juego(QMainWindow):
     senal_postjuego = pyqtSignal(bool, object, int)
     senal_explosion = pyqtSignal(object)
     senal_juego_end = pyqtSignal(int, object)
-
+    
     def __init__(self):
         super().__init__()
         self.contador = 0
+        self.nivel = Nivel1(self)
 
-    def cargarNivel(self, nivel, juego):
+    def cargarNivel(self, juego):
         self.video_widget = QVideoWidget(self)
         self.player = QMediaPlayer(self)
         self.player.setVideoOutput(self.video_widget)
@@ -55,18 +56,13 @@ class Ventana_Juego(QMainWindow):
         for p in posiciones_vidas:
             vidas.append(Corazon(p))
 
-        self.aliados = nivel.aliados
-        self.enemigos = nivel.enemigos
-
-        for parapente in self.enemigos:
-            parapente.show() #TODO: Completar creacion de parapentes
-        
-        #TODO: Crear plantas y aves
-
-        self.mano_izq = Mano("../programa/data/mano_izquierda.png")
-        self.mano_der = Mano("../programa/data/mano_derecha.png")
+        self.mano_izq = Mano(self, "../programa/data/mano_izquierda.png")
+        self.mano_der = Mano(self, "../programa/data/mano_derecha.png")
         self.mano_izq.show()
         self.mano_der.show()
+
+        self.nivel.showEnemigo(1)
+        self.nivel.showAliados()
 
 
 

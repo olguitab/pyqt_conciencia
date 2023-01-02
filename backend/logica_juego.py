@@ -26,8 +26,8 @@ class Mira(QObject):
         self.palabra = ""
 
 class Mano(QLabel):
-    def __init__(self, imageUrl):
-        super().__init__()
+    def __init__(self, parent, imageUrl):
+        super().__init__(parent)
         self.setGeometry(QtCore.QRect(220, 150 , 130, 90 ))
         self.setPixmap(QtGui.QPixmap(imageUrl))
         self.setScaledContents(True)
@@ -42,27 +42,37 @@ class Corazon(QLabel):
         self.setScaledContents(True)
         self.setPixmap(QtGui.QPixmap("../programa/data/vida.png"))
         self.setStyleSheet("background-color:  rgba(0,0,0,0%);")
-
-class Parapente(QLabel):
-    id = 1
-    def __init__(self, xy_pos, id):
-        super().__init__()
-        self.id = id+1
+class Objeto(QLabel):
+    visible = False
+    def __init__(self, parent, xy_pos):
+        super().__init__(parent)
         self.setGeometry(QtCore.QRect(xy_pos.x, xy_pos.y, 300, 230 ))
         self.setText("")
         self.setScaledContents(True)
-        self.setObjectName("parapente{}".format(id))
+        
+        
 
-class Planta(QLabel):
-    # TODO: Completar clase planta
+class Parapente(Objeto):
     id = 1
-    def __init__(self, xy_pos, id):
-        super().__init__()
+    alive = False
+    def __init__(self, parent, xy_pos, id):
+        super().__init__(parent, xy_pos)
         self.id = id+1
-        self.setGeometry(QtCore.QRect(xy_pos.x, xy_pos.y, 300, 230 ))
-        self.setText("")
-        self.setScaledContents(True)
-        self.setObjectName("planta1_{}".format(id))
+        self.setObjectName("parapente{}".format(self.id))
+
+class Planta(Objeto):
+    id = 1
+    def __init__(self, parent, xy_pos, id):
+        super().__init__(parent, xy_pos)
+        self.id = id+1
+        self.setObjectName("planta1_{}".format(self.id))
+
+class Ave(Objeto):
+    id = 1
+    def __init__(self, parent, xy_pos, id):
+        super().__init__(parent, xy_pos)
+        self.id = id+1
+        self.setObjectName("ave{}_1".format(self.id))
 
 
 
