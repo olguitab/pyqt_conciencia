@@ -21,14 +21,14 @@ from PyQt5.QtMultimediaWidgets import *
 from PyQt5.QtWidgets import*
 from backend.logica_juego import Juego
 
-class Ventana_Juego(QMainWindow):
+class Ventana_Juego4(QMainWindow):
 
     senal_tecla = pyqtSignal(object, object)
     senal_tiempo = pyqtSignal()
     senal_postjuego = pyqtSignal(bool, object, int)
     senal_explosion = pyqtSignal(object)
     senal_juego_end = pyqtSignal(int, object)
-    senal_nivel2 = pyqtSignal(int, object)
+    senal_fin_juego = pyqtSignal(int, object)
 
     def __init__(self):
         super().__init__()
@@ -39,7 +39,7 @@ class Ventana_Juego(QMainWindow):
         self.player = QMediaPlayer(self)
         self.player.setVideoOutput(self.video_widget)
         self.player.setMedia(QMediaContent(QUrl.fromLocalFile("BASEJUEGO.mp4")))
-        self.player.setPosition(75000)
+        self.player.setPosition(170000)
         self.player.setVolume(0)
         self.player.play()
 
@@ -258,7 +258,7 @@ class Ventana_Juego(QMainWindow):
         self.alien7.destroy()
         self.mira.destroy()
         self.mira_izq.destroy()
-        self.senal_nivel2.emit(1, self.juego)
+        self.senal_fin_juego.emit(1, self.juego)
         self.close()
         
     def explosion(self, x, y, contador):
